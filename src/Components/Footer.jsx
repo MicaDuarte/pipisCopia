@@ -1,10 +1,11 @@
-import React from 'react'
+import React from 'react';
+import logo2 from '../Styles/images/DH.ico';
 
 const Footer = () => {
   return (
     <footer>
-        <p>Powered by</p>
-        <img src="./img/DH.png" alt='DH-logo' />
+      <img src={logo2} alt="dh" className='logoFooter' />
+        <p>© 2024 ela_duarte. Todos los derechos reservados.</p>
     </footer>
   )
 }

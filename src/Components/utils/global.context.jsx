@@ -1,14 +1,38 @@
-import { createContext } from "react";
+import React, { createContext, useReducer, useEffect } from 'react';
+import { initialState, reducer, ACTIONS } from './reducer';
 
-export const initialState = {theme: "", data: []}
 
-export const ContextGlobal = createContext(undefined);
+export const ContextGlobal = createContext();
 
-export const ContextProvider = ({ children }) => {
-  //Aqui deberan implementar la logica propia del Context, utilizando el hook useMemo
+export const Context = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    const fetchDentists = async () => {
+      dispatch({ type: ACTIONS.SET_LOADING });
+      try {
+        const response = await fetch('https://jsonplaceholder.typicode.com/users');
+        if (!response.ok) throw new Error('Error fetching data');
+        const data = await response.json();
+        dispatch({ type: ACTIONS.SET_DENTISTS, payload: data });
+      } catch (error) {
+        dispatch({ type: ACTIONS.SET_ERROR, payload: error.message });
+      }
+    };
+
+    fetchDentists();
+  }, []);
+
+  const toggleTheme = () => {
+    dispatch({ type: ACTIONS.TOGGLE_THEME });
+  };
+
+  const updateFavs = (favs) => {
+    dispatch({ type: ACTIONS.UPDATE_FAVS, payload: favs });
+  };
 
   return (
-    <ContextGlobal.Provider value={{}}>
+    <ContextGlobal.Provider value={{ state, dispatch, toggleTheme, updateFavs }}>
       {children}
     </ContextGlobal.Provider>
   );
