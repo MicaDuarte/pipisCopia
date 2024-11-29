@@ -6,6 +6,8 @@ import Favs from './Routes/Favs';
 import Detail from './Routes/Detail';
 import Footer from './Components/Footer';
 import Navbar from './Components/Navbar';
+import Login from './Routes/Login';
+import Cart from './Routes/Cart';
 import { Context} from './Components/utils/global.context.jsx';
 
 
@@ -18,6 +20,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/favs" element={<Favs />} />
             <Route path="/dentist/:id" element={<Detail />} />
             <Route path="*" element={<h1>Error 404 - Page not Found</h1>} />
